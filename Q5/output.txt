@@ -1,0 +1,27 @@
+### java LeaderboardDemo (Complete the Code)
+[Eagles(9,6), Bisons(9,4), Panthers(9,4), Cobras(6,1)]
+
+### java RankingDesign
+Data set 1 - ties at every level:
+  CORRECT      : [Bears(12,5), Lions(12,5), Tigers(12,5), Hawks(12,3), Wolves(12,3), Rams(9,3), Sharks(9,3), Owls(9,-2), Bulls(6,0), Foxes(6,0)]
+  contract     : antisymmetry violations=0, transitivity violations=0, distinct teams comparing equal=0
+  NO_NAME (input order)   : [Lions(12,5), Tigers(12,5), Bears(12,5), Wolves(12,3), Hawks(12,3), Sharks(9,3), Rams(9,3), Owls(9,-2), Bulls(6,0), Foxes(6,0)]
+  NO_NAME (shuffled input): [Tigers(12,5), Lions(12,5), Bears(12,5), Hawks(12,3), Wolves(12,3), Sharks(9,3), Rams(9,3), Owls(9,-2), Foxes(6,0), Bulls(6,0)]
+  same ranking both times? false   | antisymmetry violations=0, transitivity violations=0, distinct teams comparing equal=6
+  CORRECT on shuffled input equals CORRECT on original? true
+
+Data set 2 - designed to break the subtraction comparator (extreme bonus/penalty points):
+  CORRECT     : [Alpha(2147483647,0), Gamma(5,0), Beta(-10,0), Delta(-2147483643,0)]
+  SUBTRACTION : [Delta(-2147483643,0), Gamma(5,0), Beta(-10,0), Alpha(2147483647,0)]
+  SUBTRACTION compare(Alpha, Beta) = 2147483639  (should be negative: Alpha has more points)
+  contract    : antisymmetry violations=2, transitivity violations=9, distinct teams comparing equal=0
+
+Reuse of the same generic design:
+  players : [Imran[9g,0a], Arjun[7g,4a], Ravi[7g,2a]]
+  best ComparableTeam via <T extends Comparable<? super T>> best(List<? extends T>): ComparableTeam[name=Eagles, points=9, goalDiff=6]
+
+Sorting cost (ms, mean of 5 after warm-up):
+  n             comparator   Comparable     3 stable sorts
+  10000                3.4          2.9                7.2   (3-sort result identical to chain: true)
+  100000              27.5         21.5               43.2   (3-sort result identical to chain: true)
+  1000000            467.0        321.1              659.6   (3-sort result identical to chain: true)
