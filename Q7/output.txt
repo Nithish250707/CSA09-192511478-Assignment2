@@ -1,0 +1,11 @@
+Correctness n=50: 600 serves, identical treatment order? true
+Correctness n=2000: 600 serves, identical treatment order? true
+Display (waiting list in current treatment order) identical? true
+Q6 starvation scenario with redesign: S5 patient seen at t = 110 min (Q6 aging result: 110)
+
+Time per serve (incl. one admit), mean of 3 timed runs after warm-up
+waiting n  serves   original (us)  redesign (us)  speed-up   orig bytes/serve redesign bytes/serve
+100        2000              1.87          0.141       13x                608                152
+1000       2000              6.69          0.098       68x               4176                152
+10000      235              71.19          0.085      842x              40176                168
+100000     50              842.28          0.117     7220x             400176                152
