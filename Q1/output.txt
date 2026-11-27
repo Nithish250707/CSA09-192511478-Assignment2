@@ -1,0 +1,34 @@
+Sample ticket (5 fields): PNR=4000000001|F1=32|F2=33|F3=34|F4=35|
+
+W1 one short ticket (1 x 8 fields), avg of 5 runs
+  approach          time (ms)     alloc (MB)  intermediate Strings*
+  String +             0.0031           0.04                      8
+  StringBuilder        0.0021           0.04                      1
+  StringBuffer         0.0021           0.04                      1
+  String.join          0.0027           0.04                      1
+  StringJoiner         0.0028           0.04                      1
+  String.format        0.0058           0.04                      8
+
+W2 bulk day (10,000 tickets x 50 fields), avg of 5 runs
+  approach          time (ms)     alloc (MB)  intermediate Strings*
+  String +             7.6267          43.40                 500000
+  StringBuilder        2.1220          17.50                  10000
+  StringBuffer         2.1525          18.00                  10000
+  String.join          2.6915          13.00                  10000
+  StringJoiner         2.3979          11.00                  10000
+  String.format       21.6688          25.30                 500000
+
+W3 group-booking manifest (20 tickets x 5,000 fields)  [own workload], avg of 5 runs
+  approach          time (ms)     alloc (MB)  intermediate Strings*
+  String +           110.4030         124.61                 100000
+  StringBuilder        0.3368           3.89                     20
+  StringBuffer         0.3527           3.86                     20
+  String.join          0.5473           2.43                     20
+  StringJoiner         0.4719           2.29                     20
+  String.format        3.9451          11.64                 100000
+* estimate: 's = s + x + "|"' is one indy concatenation (JDK 9+), so 1 new String per field, each a full copy of s;
+  builders create 1 final String per ticket (+ internal array regrowths); format creates 1 per field.
+
+Shared log trial 1: expected 4800000 chars | StringBuilder 4749624 (CORRUPTED) | StringBuffer 4800000 (OK)
+Shared log trial 2: expected 4800000 chars | StringBuilder 4756392 (CORRUPTED) | StringBuffer 4800000 (OK)
+Shared log trial 3: expected 4800000 chars | StringBuilder 4753392 (CORRUPTED) | StringBuffer 4800000 (OK)
