@@ -1,0 +1,33 @@
+Time per operation in nanoseconds (mean of 4 timed repetitions after 1 warm-up)
+operation              n             ArrayList     LinkedList      LL/AL
+add at end             1000               36.8           32.5       0.88
+add at end             10000              26.3           25.1       0.96
+add at end             100000             27.5           28.4       1.03
+insert at front        1000              113.6           75.6       0.67
+insert at front        10000             559.8           34.1       0.06
+insert at front        100000           6958.9           28.5       0.00
+remove at front        1000               71.8           44.8       0.62
+remove at front        10000             482.4           21.0       0.04
+remove at front        100000           6886.2           15.1       0.00
+insert in middle       1000               81.2         1096.1      13.50
+insert in middle       10000             297.0         8860.0      29.83
+insert in middle       100000           3547.4        84773.5      23.90
+remove from middle     1000               53.4          579.7      10.85
+remove from middle     10000             244.4         7642.7      31.28
+remove from middle     100000           3447.8        81372.9      23.60
+get k-th (random)      1000              120.0          466.3       3.89
+get k-th (random)      10000              47.8         4229.1      88.57
+get k-th (random)      100000             48.9        43420.4     888.02
+iterate (per element)  1000               19.2            8.4       0.44
+iterate (per element)  10000               3.4            2.8       0.83
+iterate (per element)  100000              2.1            2.6       1.23
+
+Plain Song[] with manual shifting (insert at front, ns/op)
+  n=1000         4326.3
+  n=10000        9950.6
+  n=100000     105759.4
+
+Up Next workload: 1,000,000 ops (40% addLast, 20% addFirst, 40% pollFirst), start size 10,000
+  ArrayList       4616.2 ms
+  LinkedList        21.1 ms
+  ArrayDeque        10.3 ms
