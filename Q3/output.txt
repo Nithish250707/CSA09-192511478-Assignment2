@@ -1,0 +1,28 @@
+### BEFORE completing TODO 1 (before/Attendance.java)
+Unique students: 3
+
+### AFTER completing TODO 1 (Attendance.java)
+Unique students: 2
+
+### ContractExperiments
+T1  Broken class, repeated scan re-uses the same object            predicted=2 actual=2 (prediction correct)
+     reason: same reference -> same identity hashCode -> same bucket, and == short-circuits equals
+T2  Broken class, 6 scans of 3 students, new object per scan       predicted=6 actual=6 (prediction correct)
+     reason: Object.hashCode() differs per object -> different buckets -> equals() never called
+     equals says scan#1 equals scan#3: true, but hashCodes 804564176 vs 1421795058
+     contains(new BrokenStudent("192311001")) = false
+T2' Fixed class, same 6 scans                                      predicted=3 actual=3 (prediction correct)
+     reason: equal regNo -> equal hashCode -> same bucket -> equals() finds the duplicate
+T3a Mutable key changed after add, then same student re-added      predicted=1 actual=2 (PREDICTION WRONG)
+     reason: object sits in the bucket of the OLD hash; lookup goes to the NEW bucket, so contains=false and a duplicate is added
+     remove(m) = true -> the original entry is now unreachable (memory leak in the set)
+T3b TreeSet ordered by name; two different students named Priya    predicted=3 actual=2 (PREDICTION WRONG)
+     reason: TreeSet uses compare()==0, not equals(); the second Priya is silently dropped
+
+Verification: 10,000 random scans -> HashSet size 1000, distinct regNos 1000  OK
+
+Time per scan (ns), n unique students, 10 scans each, mean of 3 runs
+n            HashSet   TreeSet(cmp)  HashMap<regNo,..>
+1000            92.1          105.0               61.4
+10000           18.7          118.0               18.1
+100000          17.2          198.8               17.8
