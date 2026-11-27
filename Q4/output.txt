@@ -1,0 +1,24 @@
+Times in ms (mean of 5 runs after 1 warm-up, after a global warm-up pass). Lookups = 100,000 random get(code).
+n         map              put all    100k gets   code report  added report    code ok   added ok
+1000      HashMap             0.02         1.56          0.03          0.00       true       true
+1000      TreeMap             0.10        12.10          0.02          0.00       true       true
+1000      LinkedHashMap       0.04         2.56          0.05          0.00       true       true
+1000      Hashtable           0.03         2.48          0.03          0.00       true       true
+1000      sorted array        0.12        12.44   0 (already)     needs log
+10000     HashMap             0.26         2.15          0.43          0.02       true       true
+10000     TreeMap             1.50        15.12          0.14          0.02       true       true
+10000     LinkedHashMap       0.34         1.85          0.93          0.02       true       true
+10000     Hashtable           0.26         1.41          0.22          0.02       true       true
+10000     sorted array        1.38        10.46   0 (already)     needs log
+100000    HashMap             5.71         3.90          5.10          0.72       true       true
+100000    TreeMap            21.69        21.34          1.44          0.60       true       true
+100000    LinkedHashMap       5.37         1.66         14.94          0.14       true       true
+100000    Hashtable           3.78         1.95          3.42          0.35       true       true
+100000    sorted array       19.41        16.15   0 (already)     needs log
+1000000   HashMap            71.85         5.58         92.97         10.90       true       true
+1000000   TreeMap           523.49        58.40         66.78         10.51       true       true
+1000000   LinkedHashMap     114.28         5.03        276.72         34.27       true       true
+1000000   Hashtable          91.06         5.73         56.47         10.48       true       true
+1000000   sorted array      310.21        45.05   0 (already)     needs log
+
+Sorted array: insert one new medicine near the front at n=100,000: 6.9 us (binary search + shift)
