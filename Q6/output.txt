@@ -1,0 +1,34 @@
+### java Triage (Complete the Code)
+Meena(S1) Kumar(S1) Lata(S2) Ravi(S3) John(S3) Asha(S5)
+
+### java TriageStudy
+Arrivals (in order): Anil S4, Bala S2, Chitra S5, Deepa S2, Ezhil S1, Farah S4, Gopi S3, Hema S1
+Hand-worked order  : Ezhil(S1) Hema(S1) Bala(S2) Deepa(S2) Gopi(S3) Anil(S4) Farah(S4) Chitra(S5)
+PriorityQueue.toString() (heap array): [Ezhil(S1), Hema(S1), Gopi(S3), Bala(S2), Deepa(S2), Chitra(S5), Farah(S4), Anil(S4)]
+Waiting list display (sorted copy)   : [Ezhil(S1), Hema(S1), Bala(S2), Deepa(S2), Gopi(S3), Anil(S4), Farah(S4), Chitra(S5)]
+Program treatment order (poll)       : Ezhil(S1) Hema(S1) Bala(S2) Deepa(S2) Gopi(S3) Anil(S4) Farah(S4) Chitra(S5)
+Matches hand-worked order? true
+
+Growth: ns per admit / per serve (queue pre-filled to n, 100,000 admit+serve pairs, mean of 5)
+  n             admit (add)   serve (poll)    log2(n)
+  1000                 20.9          135.0       10.0
+  10000                15.8          140.7       13.3
+  100000               14.8          136.4       16.6
+  1000000              14.5          202.8       19.9
+
+Starvation simulation: 1 doctor, 1 patient seen every 10 min; severe patients (S1/S2) arrive every 9 min;
+one S5 patient (Zara) arrives at t=0. Simulated 12 hours.
+  Strict severity rule          : Zara seen at NEVER (still waiting after 12 h, queue length 9)
+  With aging (1 level per 30 min waited): Zara seen at t = 110 min
+
+Alternative designs: ns per admit / serve with n waiting (20,000 admit+serve pairs, mean of 3)
+  n          design                        admit        serve
+  1000       PriorityQueue                  22.1        155.2
+  1000       sorted LinkedList           31881.0          4.9
+  1000       5 FIFO queues                  34.0         30.3
+  10000      PriorityQueue                  23.3        167.0
+  10000      sorted LinkedList           46399.0          3.5
+  10000      5 FIFO queues                   4.3          2.3
+  100000     PriorityQueue                  21.0        180.2
+  100000     sorted LinkedList          198735.4          2.2
+  100000     5 FIFO queues                   7.4          1.7
